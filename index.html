@@ -1,0 +1,47 @@
+"Yayyy! Correct answer! ✨ +10 points";
+    document.getElementById("feedback").style.color = "#36a879";
+  } else {
+    button.classList.add("wrong");
+    document.getElementById("feedback").textContent =
+      "Almost! Keep learning, cutie ♡";
+    document.getElementById("feedback").style.color = "#d57891";
+  }
+
+  history.push({
+    question: item.q,
+    correct: item.options[correctAnswer],
+    chosen: item.options[choice],
+    isCorrect
+  });
+
+  document.getElementById("liveScore").textContent =
+    `♡ ${score} POINTS`;
+
+  document.getElementById("bar").style.width =
+    `${(current + 1) / questions.length * 100}%`;
+
+  const next = document.getElementById("next");
+  next.textContent = current === questions.length - 1
+    ? "See my results ✧"
+    : "Next question →";
+  next.classList.remove("hidden");
+}
+
+function nextQuestion() {
+  if (!locked) return;
+
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function escapeHTML(text) {
+  return text.replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;
